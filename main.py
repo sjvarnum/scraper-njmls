@@ -97,7 +97,7 @@ def get_agent_list():
 df = pd.DataFrame(get_agent_list())
 agent_df = df[['Name', 'Title', 'Agency', 'Office Number',
                'Contact Number', 'Email']].drop_duplicates()
-agent_df.to_csv('njmls_agents_20180221.csv', index=False)
+agent_df.to_csv('njmls_agents_20180509.csv', index=False)
 # municipalities_dict = get_municipality()
 # print(municipalities_dict[:2])
 # print(get_municipality()[:2])
