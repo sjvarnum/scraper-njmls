@@ -47,37 +47,37 @@ for url in url_list:
         my_dict = {}
         try:
             my_dict['Name'] = i.find('strong').text
-        except:
+        except AttributeError:
             None
         try:
             my_dict['Title'] = i.find('div').contents[0].replace(
                 '\n', '').replace('\t', '')
-        except:
+        except AttributeError:
             None
         try:
             my_dict['Agency'] = i.find_all('strong')[1].text
-        except:
+        except AttributeError:
             None
         try:
             my_dict['Office Number'] = office_npa = i.find(string=re.compile('Office Phone:')).replace('\n', '').replace('\t', '').split(
                 ' ')[2].replace('(', '').replace(')', '-') + i.find(string=re.compile('Office Phone:')).replace('\n', '').replace('\t', '').split(' ')[-1]
-        except:
+        except AttributeError:
             None
 
         try:
             my_dict['Contact Number'] = i.find(string=re.compile('Contact Phone:')).replace('\n', '').replace('\t', '').split()[2]            .replace(
                 '(', '').replace(')', '-') + i.find(string=re.compile('Contact Phone:')).replace('\n', '').replace('\t', '').split()[-1]
-        except:
+        except AttributeError:
             None
 
         try:
             my_dict['Email'] = i.find('a', {'class': 'tips'}).get(
                 'href').split(':')[1].split('?')[0]
-        except:
+        except AttributeError:
             None
         agent_list.append(my_dict)
 
 df = pd.DataFrame(agent_list)
 agent_df = df[['Name', 'Title', 'Agency', 'Office Number',
                'Contact Number', 'Email']].drop_duplicates()
-agent_df.to_excel('njmls_agents_20180211.xlsx', index=False)
+agent_df.to_csv('njmls_agents_20180509.csv', index=False)
