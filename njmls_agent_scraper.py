@@ -1,3 +1,5 @@
+""" This version gets the list of municipalities from Wikipedia """
+
 
 from bs4 import BeautifulSoup
 import requests
@@ -10,9 +12,8 @@ agent = (
     '(KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299'
 )
 
-r = requests.get(
-    'https://en.wikipedia.org/wiki/List_of_municipalities_in_New_Jersey'
-)
+wiki_url = 'https://en.wikipedia.org/wiki/List_of_municipalities_in_New_Jersey'
+r = requests.get(wiki_url, headers={'User-Agent': agent})
 c = r.content
 soup = BeautifulSoup(c, 'html.parser')
 
@@ -51,16 +52,16 @@ for url in url_list:
         my_dict = {}
         try:
             my_dict['Name'] = i.find('strong').text
-        except AttributeError:
+        except (AttributeError, IndexError):
             None
         try:
             my_dict['Title'] = i.find('div').contents[0].replace(
                 '\n', '').replace('\t', '')
-        except AttributeError:
+        except (AttributeError, IndexError):
             None
         try:
             my_dict['Agency'] = i.find_all('strong')[1].text
-        except AttributeError:
+        except (AttributeError, IndexError):
             None
         try:
             my_dict['Office Number'] = (i.find(
@@ -70,7 +71,7 @@ for url in url_list:
                 .replace(')', '-') + i.find(
                 string=re.compile('Office Phone:'))
                 .replace('\n', '').replace('\t', '').split(' ')[-1])
-        except AttributeError:
+        except (AttributeError, IndexError):
             None
 
         try:
@@ -81,7 +82,7 @@ for url in url_list:
                 .replace(')', '-') + i.find(
                 string=re.compile('Contact Phone:'))
                 .replace('\n', '').replace('\t', '').split()[-1])
-        except AttributeError:
+        except (AttributeError, IndexError):
             None
 
         try:
