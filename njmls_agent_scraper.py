@@ -5,6 +5,11 @@ import pandas as pd
 import re
 
 
+agent = (
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+    '(KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299'
+)
+
 r = requests.get(
     'https://en.wikipedia.org/wiki/List_of_municipalities_in_New_Jersey'
 )
@@ -37,11 +42,10 @@ url_list
 agent_list = []
 for url in url_list:
 
-    r = requests.get(url)
+    r = requests.get(url, headers={'User-Agent': agent})
     c = r.content
     soup = BeautifulSoup(c, 'html.parser')
     agents = soup.find_all('div', {'class': 'realtor-info'})
-#     agent = soup.find_all('div', {'class':'realtor-info'})[0]
 
     for i in agents[:-1]:
         my_dict = {}
