@@ -59,14 +59,24 @@ for url in url_list:
         except AttributeError:
             None
         try:
-            my_dict['Office Number'] = office_npa = i.find(string=re.compile('Office Phone:')).replace('\n', '').replace('\t', '').split(
-                ' ')[2].replace('(', '').replace(')', '-') + i.find(string=re.compile('Office Phone:')).replace('\n', '').replace('\t', '').split(' ')[-1]
+            my_dict['Office Number'] = (i.find(
+                string=re.compile('Office Phone:'))
+                .replace('\n', '').replace('\t', '')
+                .split(' ')[2].replace('(', '')
+                .replace(')', '-') + i.find(
+                string=re.compile('Office Phone:'))
+                .replace('\n', '').replace('\t', '').split(' ')[-1])
         except AttributeError:
             None
 
         try:
-            my_dict['Contact Number'] = i.find(string=re.compile('Contact Phone:')).replace('\n', '').replace('\t', '').split()[2]            .replace(
-                '(', '').replace(')', '-') + i.find(string=re.compile('Contact Phone:')).replace('\n', '').replace('\t', '').split()[-1]
+            my_dict['Contact Number'] = (i.find(
+                string=re.compile('Contact Phone:'))
+                .replace('\n', '').replace('\t', '')
+                .split()[2].replace('(', '')
+                .replace(')', '-') + i.find(
+                string=re.compile('Contact Phone:'))
+                .replace('\n', '').replace('\t', '').split()[-1])
         except AttributeError:
             None
 
