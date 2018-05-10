@@ -13,10 +13,12 @@ class Scraper(object):
 
     def get_municipalties(self):
 
-        muni_url = ("http://www.njmls.com/listings/index.cfm?action="
-                    "xhr.multiple_town_select_new#tab1")
+        muni_url = ('http://www.njmls.com/listings/index.cfm')
+        action = 'xhr.multiple_town_select_new'
+        payload = {'action': action}
 
-        self.r = requests.get(muni_url, headers={'User-Agent': Scraper.agent})
+        self.r = requests.get(muni_url, params=payload,
+                              headers={'User-Agent': Scraper.agent})
         self.c = self.r.content
         self.soup = BeautifulSoup(self.c, 'html.parser')
 
