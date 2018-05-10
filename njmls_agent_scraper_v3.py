@@ -25,12 +25,12 @@ class Scraper(object):
         municipalities = []
         for i in self.soup.find_all('input', {'class': 'multitown_checks'}):
             value = i.get('value')
-            municipalities.append(value)
-        print('this would be a list of munis')
+            my_dict = {}
+            my_dict['City'] = value.split(', ')[0]
+            my_dict['County'] = value.split(', ')[2]
+            municipalities.append(my_dict)
+        print("List of cities and the counties they're in.")
         return municipalities
-
-    def get_counties():
-        pass
 
 
 if __name__ == '__main__':
