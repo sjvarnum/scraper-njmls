@@ -81,9 +81,9 @@ for url in url_list:
             None
 
         try:
-            my_dict['Email'] = i.find('a', {'class': 'tips'}).get(
-                'href').split(':')[1].split('?')[0]
-        except AttributeError:
+            my_dict['Email'] = (i.find('a', {'class': 'tips'})
+                                .get('href').split(':')[1].split('?')[0])
+        except (AttributeError, IndexError):
             None
         agent_list.append(my_dict)
 
