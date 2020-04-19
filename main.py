@@ -11,7 +11,7 @@ class Scraper(object):
         '(KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299'
     )
 
-    def get_municipalties(self):
+    def get_municipalities(self):
 
         muni_url = ('http://www.njmls.com/listings/index.cfm')
         action = 'xhr.multiple_town_select_new'
@@ -34,12 +34,12 @@ class Scraper(object):
 
 if __name__ == '__main__':
     scraper = Scraper()
-    municipalties = scraper.get_municipalties()
+    municipalities = scraper.get_municipalities()
 
     base_url = 'http://www.njmls.com/members/index.cfm?action=dsp.results'
 
     agent_list = []
-    for item in municipalties:
+    for item in municipalities:
         city = item['City']
         county = item['County']
         params = {'city': city, 'county': county}
@@ -92,13 +92,6 @@ if __name__ == '__main__':
                     .replace('\n', '').replace('\t', '').split()[-1])
             except (AttributeError, IndexError):
                 None
-
-            try:
-                my_dict['Email'] = (i.find('a', {'class': 'tips'})
-                                    .get('href').split(':')[1].split('?')[0])
-            except (AttributeError, IndexError):
-                None
-            agent_list.append(my_dict)
 
     df = pd.DataFrame(agent_list)
     agent_df = (df[['Name', 'Title', 'Agency', 'Office Number',
