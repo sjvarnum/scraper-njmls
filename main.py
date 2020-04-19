@@ -33,6 +33,7 @@ class Scraper(object):
 
 
 if __name__ == '__main__':
+    print("Collecting data. This will take some time. Please be patient.")
     scraper = Scraper()
     municipalities = scraper.get_municipalities()
 
@@ -93,9 +94,11 @@ if __name__ == '__main__':
             except (AttributeError, IndexError):
                 None
 
+            agent_list.append(my_dict)
+
+    dte = pd.Timestamp.now()
+    tstamp = dte.strftime(format='%Y%m%dT%I%M%S')
+    print(f"Outputting list to csv file njmls_agents_{tstamp}.csv.")
     df = pd.DataFrame(agent_list)
-    agent_df = (df[['Name', 'Title', 'Agency', 'Office Number',
-                    'Contact Number', 'Email']]
-                .drop_duplicates()
-                .sort_values('Name'))
-    agent_df.to_csv('njmls_agents.csv', index=False)
+    agent_df = (df[['Name', 'Title', 'Agency', 'Office Number', 'Contact Number']].drop_duplicates().sort_values('Name'))
+    agent_df.to_csv(f'njmls_agents_{tstamp}.csv', index=False)
